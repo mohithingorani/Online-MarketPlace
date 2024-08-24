@@ -7,14 +7,19 @@ interface CardProps {
   name: string;
   description: string;
   price: number;
+  image: string;
+  contact : number;
 }
-export async function addCard({ name, description, price }: CardProps) {
+
+export async function addCard({ name, description, price, image, contact }: CardProps) {
   try {
     const card = prisma.card.create({
       data: {
         name,
         description,
         price,
+        image,
+        contact
       },
     });
     return card;
