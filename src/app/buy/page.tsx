@@ -42,7 +42,7 @@ interface CardsProps {
 // Component to display all cards
 export function Cards({ cards }: CardsProps) {
   return (
-    <div className="flex justify-start gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {cards.map((card) => (
         <Card
           key={card.id}
@@ -74,8 +74,8 @@ export function Card({ name, price, imageSrc, contact }: CardProps) {
   }
 
   return (
-    <div className="px-4 py-8">
-      <div className="h-full bg-white py-2 border rounded-md shadow-md max-w-fit flex flex-col justify-between items-center px-4 gap-2">
+    <div className="p-4 sm:p-6 md:p-8">
+      <div className="h-full bg-white py-2 border rounded-md shadow-md flex flex-col justify-between items-center gap-2">
         <div className="w-[10rem] flex-col justify-center items-center">
           <Image
             className="h-full bg-contain"

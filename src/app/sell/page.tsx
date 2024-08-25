@@ -164,7 +164,6 @@ export default function Sell() {
 
   return (
     <div className="p-6">
-      {JSON.stringify(price)}
       <div className="max-w-4xl mx-auto space-y-6">
         {/* General Information */}
         <div className="bg-black bg-opacity-30 backdrop-blur-lg border border-white p-6 rounded-lg shadow-lg">

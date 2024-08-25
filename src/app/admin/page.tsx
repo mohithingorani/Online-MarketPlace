@@ -12,7 +12,12 @@ export default function Admin() {
     async function fetchCards() {
       try {
         const fetchedCards = await getCards();
-        setCards(fetchedCards);
+        // Ensure 'contact' is a string in each card
+        const formattedCards: CardData[] = fetchedCards.map((card: any) => ({
+          ...card,
+          contact: card.contact.toString(), // Convert contact from bigint to string
+        }));
+        setCards(formattedCards);
       } catch (error) {
         console.error("Failed to fetch cards:", error);
         setError("Failed to load cards");
@@ -59,7 +64,7 @@ export default function Admin() {
             <th className="border border-gray-200 px-4 py-2"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {cards.map((card) => (
             <tr key={card.id}>
               <td className="border border-gray-200 px-4 py-2">
