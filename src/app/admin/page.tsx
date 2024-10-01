@@ -7,6 +7,17 @@ export default function Admin() {
   const [cards, setCards] = useState<CardData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    function checkAdmin() {
+      const password = prompt("Enter password");
+      if (password === "admin") {
+        setIsAdmin(true);
+      }
+    }
+    if (!isAdmin) checkAdmin();
+  }, []);
 
   useEffect(() => {
     async function fetchCards() {
@@ -25,9 +36,8 @@ export default function Admin() {
         setLoading(false);
       }
     }
-
-    fetchCards();
-  }, []);
+    if (isAdmin) fetchCards();
+  }, [isAdmin]);
 
   async function handleDelete(cardId: string) {
     try {
@@ -39,6 +49,10 @@ export default function Admin() {
     } catch (error) {
       console.error("Failed to delete card:", error);
     }
+  }
+
+  if (!isAdmin) {
+    return <div>You are not authorized to view this page.</div>;
   }
 
   if (loading) {
@@ -54,40 +68,42 @@ export default function Admin() {
   }
 
   return (
-    <div className="flex flex-col items-center px-8">
-      <table className="w-full table-auto border-collapse border border-gray-200">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-200 px-4 py-2">Name</th>
-            <th className="border border-gray-200 px-4 py-2">Description</th>
-            <th className="border border-gray-200 px-4 py-2">Price</th>
-            <th className="border border-gray-200 px-4 py-2"></th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {cards.map((card) => (
-            <tr key={card.id}>
-              <td className="border border-gray-200 px-4 py-2">
-                {card.name}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                {card.description}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                {card.price}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                <button
-                  onClick={() => handleDelete(card.id)}
-                  className="text-blue-600 hover:underline hover:text-blue-900"
-                >
-                  Delete
-                </button>
-              </td>
+    <div className="h-screen">
+      <div className="flex flex-col items-center px-8 h-full">
+        <table className="w-full table-auto border-collapse border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-200 px-4 py-2">Name</th>
+              <th className="border border-gray-200 px-4 py-2">Description</th>
+              <th className="border border-gray-200 px-4 py-2">Price</th>
+              <th className="border border-gray-200 px-4 py-2"></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="">
+            {cards.map((card) => (
+              <tr key={card.id}>
+                <td className="border border-gray-200 px-4 py-2">
+                  {card.name}
+                </td>
+                <td className="border border-gray-200 px-4 py-2">
+                  {card.description}
+                </td>
+                <td className="border border-gray-200 px-4 py-2">
+                  {card.price}
+                </td>
+                <td className="border border-gray-200 px-4 py-2">
+                  <button
+                    onClick={() => handleDelete(card.id)}
+                    className="text-blue-600 hover:underline hover:text-blue-900"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

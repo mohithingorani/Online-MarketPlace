@@ -91,7 +91,7 @@ export function Card({ name, price, imageSrc, contact }: CardProps) {
           <div className="w-full">
             <button
               onClick={toggleShow}
-              className="max-w-full w-max mt-4 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-full hover:bg-green-700 transition-colors duration-300"
+              className="w-full mt-4 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-full hover:bg-green-700 transition-colors duration-300"
             >
               {showContact ? contact : "Show Contact"}
             </button>

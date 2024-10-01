@@ -9,14 +9,14 @@ export default function Home() {
         <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
           Sell Things Online
         </h1>
-        <p className="text-lg text-gray-700">
+        <div className="text-lg text-gray-700">
           <div>
           Start selling your products today in
           </div>
           <div>
             Manipal University Jaipur
           </div>
-        </p>
+        </div>
         <Link href="/sell">
           <div className="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-lg hover:bg-indigo-700 transition duration-300">
             Start Selling
