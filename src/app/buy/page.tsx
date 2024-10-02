@@ -2,6 +2,7 @@
 import { getCards } from "@/api/card";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { NavBar } from "../components/NavBar";
 
 // Interface for card data
 export interface CardData {
@@ -16,10 +17,13 @@ export interface CardData {
 // Main component for displaying cards
 export default function Buy() {
   const [cards, setCards] = useState<CardData[]>([]);
+  const [search, setSearch] = useState<string>("")
+
+  let timeout : null | NodeJS.Timeout = null; 
 
   useEffect(() => {
     async function getItems() {
-      const fetchedCards = await getCards();
+      const fetchedCards = await getCards(search);
       // Map through the fetched cards and ensure 'contact' is a string
       const formattedCards: CardData[] = fetchedCards.map((card: any) => ({
         ...card,
@@ -27,11 +31,33 @@ export default function Buy() {
       }));
       setCards(formattedCards);
     }
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(()=>{
+     getItems(); 
+    }, 1000);
+  }, [search]);
 
-    getItems();
-  }, []);
 
-  return <Cards cards={cards} />;
+  return (
+    <>
+      <NavBar search={search} setSearch={setSearch}/>
+      <div className="mx-72">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              name={card.name}
+              price={card.price}
+              imageSrc={card.image}
+              contact={card.contact}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
 
 // Interface for props passed to Cards component
@@ -86,8 +112,8 @@ export function Card({ name, price, imageSrc, contact }: CardProps) {
           />
         </div>
         <div className="flex gap-2 flex-col justify-center items-center">
+          <div className="text-lg font-semibold ">{`₹ ${price}/-`}</div>
           <div>{name}</div>
-          <div className="text-sm text-gray-600">{`Rs. ${price}/-`}</div>
           <div className="w-full">
             <button
               onClick={toggleShow}

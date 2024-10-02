@@ -22,7 +22,7 @@ export default function Admin() {
   useEffect(() => {
     async function fetchCards() {
       try {
-        const fetchedCards = await getCards();
+        const fetchedCards = await getCards("");
         // Ensure 'contact' is a string in each card
         const formattedCards: CardData[] = fetchedCards.map((card: any) => ({
           ...card,
@@ -69,7 +69,7 @@ export default function Admin() {
 
   return (
     <div className="h-screen">
-      <div className="flex flex-col items-center px-8 h-full">
+      <div className="flex flex-col items-center px-8 h-full pt-4">
         <table className="w-full table-auto border-collapse border border-gray-200">
           <thead>
             <tr className="bg-gray-100">

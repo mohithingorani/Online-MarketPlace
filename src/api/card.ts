@@ -29,8 +29,25 @@ export async function addCard({ name, description, price, image, contact }: Card
   }
 }
 
-export async function getCards() {
-  const items = await prisma.card.findMany({});
+export async function getCards(search : string) {
+  const items = await prisma.card.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+        {
+          description: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+  });
   return items;
 }
 
